@@ -1,5 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
+import {FaDumbbell, FaBusAlt, FaPoundSign} from "react-icons/fa"
+import {BsFillHouseDoorFill,BsFillBasketFill} from "react-icons/bs"
+import {TbGlass} from "react-icons/tb"
+import {IoMdPaper} from "react-icons/io"
+import {IconContext} from "react-icons"
 
 const Table = styled.div`
   display: grid;
@@ -24,15 +29,45 @@ const Text = styled.div`
 `
 const Price = styled(Text)`
 
+
 `
 
 function ExpensesTracker() {
   return (
     <div>
         <Table>
-            <Items>
-                
-            </Items>
+            <IconContext.Provider value = {{size:"2em",style:{justifyContent: 'center',alignSelf:"center"}}}>
+                <Items> 
+                    <Text>Gym</Text>
+                    <FaDumbbell />
+                    <Price>£12.99</Price>
+                </Items>
+                <Items> 
+                    <Text>Rent</Text>
+                    <BsFillHouseDoorFill value = {{style: {verticalAlign:'middle'}}}/> 
+                    <Price>£12.99</Price>
+                </Items>
+                <Items> 
+                    <Text> Groceries</Text>
+                    <BsFillBasketFill value = {{style: {verticalAlign:'middle'}}}/> 
+                    <Price>£12.99</Price>
+                </Items>
+                <Items> 
+                    <Text> Travel </Text>
+                    <FaBusAlt value = {{style: {verticalAlign:'middle'}}}/> 
+                    <Price>£12.99</Price>
+                </Items>
+                <Items> 
+                    <Text> Social </Text>
+                    <TbGlass value = {{style: {verticalAlign:'middle'}}}/> 
+                    <Price>£12.99</Price>
+                </Items>
+                <Items> 
+                    <Text> Bills </Text>
+                    <IoMdPaper value = {{style: {verticalAlign:'middle'}}}/> 
+                    <Price>£12.99</Price>
+                </Items>
+            </IconContext.Provider>
         </Table>
     </div>
   )

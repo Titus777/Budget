@@ -112,7 +112,7 @@ function Home() {
           <Items> 
             <Text> Bills </Text>
             <IoMdPaper value = {{style: {verticalAlign:'middle'}}}/> 
-            <Price>£12.99</Price>
+            <Price>12.99</Price>
           </Items>
         </Table>
       </IconContext.Provider>
