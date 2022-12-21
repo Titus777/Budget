@@ -1,7 +1,8 @@
 import theme from "./config/theme.js";
-import styled, { ThemeProvider } from "styled-components";
+import {ThemeProvider} from "styled-components";
 import GlobalStyles from "./config/GlobalStyles";
 import Home from "./Views/Home";
+import Expenses from "./Views/Expenses.js";
 
 
 
@@ -10,7 +11,7 @@ function App() {
     <div className="App">
       <ThemeProvider theme={theme}>
         <GlobalStyles/>
-        <Home/>
+        <Expenses/>
       </ThemeProvider>
     </div>
   );
