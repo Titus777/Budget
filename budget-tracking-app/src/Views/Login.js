@@ -42,7 +42,6 @@ function Login() {
             <div>Not registered?! Create a new account now!</div>
             <Input type="button" value="Create new account!"/>
         </RegisterBox>
-        
     </LoginContainer>
     </>
   )

@@ -4,6 +4,7 @@ import {BiHome} from 'react-icons/bi'
 import {AiFillSetting} from 'react-icons/ai'
 import {MdGraphicEq} from "react-icons/md"
 import {IconContext} from "react-icons"
+import {Link} from "react-router-dom"
 
 const FooterBar = styled.div`
   display: flex;
@@ -55,17 +56,25 @@ function Header() {
         </WelcomeHeader>
         <OptionFeed>
           <Option>
-            <BiHome/>
+            <Link to="/">
+             <BiHome/>
+            </Link>
           </Option>
           <Option>
-            <AiFillSetting/>
+            <Link to="/bills">
+              <AiFillSetting/>
+            </Link>
           </Option>
           <Option>
-            <MdGraphicEq/>
+            <Link to="/expens">
+              <MdGraphicEq/>
+            </Link>
           </Option>
        
         </OptionFeed>
-        <LogButton type="button" value="Login"/>
+        <Link to="/login">
+          <LogButton type="button" value="Login"/>
+        </Link>
       </IconContext.Provider>
     </FooterBar>
   )
