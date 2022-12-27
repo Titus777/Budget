@@ -1,7 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
+import useAuth from "../services/firebase/useAuth";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 
-const Form = styled.div`
+
+const Form = styled.form`
     display:flex;
     flex-direction:column;
     width:70%;
@@ -25,14 +30,41 @@ const Input = styled.input`
 `
 
 function RegisterForm() {
+  const {createUser} = useAuth()
+  const schema = yup.object().shape({
+    email: yup
+      .string()
+      .email("email is not valid")
+      .required("you must enter an email"),
+    password: yup
+      .string()
+      .required("password is required")
+      .min(2, "password must be a a longer than two letters"),
+  })
+
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm({ resolver: yupResolver(schema) })
+
+  const inSubmit = async (data) => {
+    try{
+      const {email,password} = data
+      await createUser(email,password)
+    }catch(e){
+      console.log(e)
+    }
+  }
+
   return (
-    <Form>
-        <Label>Username</Label>
-        <Input type="text"/>
-        <Label>Email</Label>
-        <Input type = "text"/>
-        <Label>Password</Label>
-        <Input type="password"/>
+    <Form onSubmit={handleSubmit(inSubmit)}>
+        <p>{errors.email && errors.email?.message}</p>
+        <Label htmlfor="email" >Email</Label>
+        <Input {...register("email")} type = "text"/>
+        <p>{errors.password && errors.password?.message}</p>
+        <Label htmlfor="password" >Password</Label>
+        <Input {...register("password")} type="password"/>
         <Input btn type="submit" value="Register NOW!"/>
     </Form>
   )

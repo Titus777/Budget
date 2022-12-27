@@ -1,7 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
+import useAuth from "../services/firebase/useAuth";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 
-const Form = styled.div`
+
+const Form = styled.form`
     display:flex;
     flex-direction:column;
     width:70%;
@@ -29,13 +34,43 @@ const Input = styled.input`
 
 
 function LoginForm() {
+  const {signIn} = useAuth()
+  const schema = yup.object().shape({
+    password: yup
+      .string()
+      .required("password is required")
+      .min(2, "password must be a a longer than two letters"),
+    username: yup
+      .string()
+      .required("Username is required")
+      .min(3,"Minimum of 3 characters")
+      .max(12, "Maximum of twelve characters")
+  })
+
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm({ resolver: yupResolver(schema) })
+
+  const onSubmit = async (data) => {
+    try{
+      const {email,password} = data
+      await signIn(email,password)
+    }catch(e){
+      console.log(e)
+    }
+  }
+
   return (
-    <Form>
-        <Label>Username</Label>
-        <Input type="text" placeholder="Username"/>
-        <Label>Password</Label>
-        <Input type="password" placeholder="Password"/>
-        <Input btn type="submit" value="Login"/>
+    <Form onSubmit={handleSubmit(onSubmit)}>
+        <p>{errors.username && errors.username?.message}</p>
+        <Label htmlfor="username">Username</Label>
+        <Input {...register("username")} type="text"/>
+        <p>{errors.password && errors.password?.message}</p>
+        <Label htmlfor="password" >Password</Label>
+        <Input {...register("password")} type="password"/>
+        <Input btn type="submit" value="Sign In"/>
     </Form>
   )
 }

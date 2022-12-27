@@ -1,7 +1,11 @@
-import React from 'react'
+import React,{useState} from 'react'
 import styled from 'styled-components'
 import LoginForm from '../Components/LoginForm'
 import RegisterForm from '../Components/RegisterForm'
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
 
 const LoginContainer = styled.div`
     display:flex;
@@ -12,7 +16,7 @@ const LoginContainer = styled.div`
     border: 2px solid grey;
     box-shadow: 2px;
     margin-top: 20vh;
-    height: 50vh;
+    height: fit-content;
     width: 50%;
     background-color: hsl(100, 0%, 69%);
 `
@@ -33,15 +37,23 @@ const Input = styled.input`
 `
 
 function Login() {
+    const [isNewUser, setUser] = useState(false)
+
+    const registerForm = () => {
+        setUser(true)
+    }
+
   return (
+    
     <>
     <h3>Sign Up</h3>
     <LoginContainer>
-        <LoginForm/>
+        {!isNewUser ? (<>
+        <LoginForm />
         <RegisterBox>
             <div>Not registered?! Create a new account now!</div>
-            <Input type="button" value="Create new account!"/>
-        </RegisterBox>
+            <Input type="button" value="Create new account!" onClick={(e) => registerForm()}/>
+        </RegisterBox> </>) : <RegisterForm/>}
     </LoginContainer>
     </>
   )
