@@ -1,5 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import useExpense from '../services/firebase/useExpense';
+import { getAuth } from 'firebase/auth';
+import createNotification from '../assets/notification';
 
 const Container = styled.div`
   display:flex-column;
@@ -8,7 +14,7 @@ const Container = styled.div`
   margin:auto auto auto;
 `
 
-const Form = styled.div`
+const Form = styled.form`
     display:flex;
     flex-direction:column;
     width:70%;
@@ -31,21 +37,84 @@ const Input = styled.input`
 
 `
 function ExpensesForm() {
+  const {createExpenses} = useExpense()
+  const auth = getAuth()
+  const schema = yup.object().shape({
+    gym: yup
+      .string()
+      .required()
+      .min(5, "Please format them `22.44`"),
+    rent: yup
+    .string()
+    .required()
+    .min(5, "Please format them `22.44`"),
+    groceries: yup
+    .string()
+    .required()
+    .min(5, "Please format them `22.44`"),
+    travel: yup
+    .string()
+    .required()
+    .min(5, "Please format them `22.44`"),
+    social: yup
+    .string()
+    .required()
+    .min(5, "Please format them `22.44`"),
+    bills: yup
+    .string()
+    .required()
+    .min(5, "Please format them `22.44`"),
+  })
+
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm({ resolver: yupResolver(schema) })
+
+  const inSubmit = async (data) => {
+   
+    try{
+      const {gym,rent,groceries,travel,social,bills} = data
+      const filledData= {
+        user: auth.currentUser.email,
+        expenses:[
+        gym,
+        rent,
+        groceries,
+        travel,
+        social,
+        bills],
+        createdAt: new Date().toString()
+        }
+      await createExpenses(filledData)
+      createNotification("Success","Succesfull sent your expenses")
+    }catch(e){
+      createNotification("Error",`${e}`)
+      console.log(e)
+    }
+  }
+
+
   return (
     <Container>
-        <Form>
+        <Form onSubmit={handleSubmit(inSubmit)}>
+          <h3>{errors && errors?.message}</h3>
             <Label>Gym </Label>
-            <Input type="text"/>
+            <Input {...register("gym")} type="text"/>
             <Label>Rent </Label>
-            <Input type="text"/>
+            <Input {...register("rent")} type="text"/>
             <Label>Groceries </Label>
-            <Input type="text"/>
+            <Input {...register("groceries")} type="text"/>
             <Label>Travel </Label>
-            <Input type="text"/>
+            <Input {...register("travel")} type="text"/>
             <Label>Social </Label>
-            <Input type="text"/>
+            <Input {...register("social")} type="text"/>
+            <Label>Bills </Label>
+            <Input {...register("bills")} type="text"/>
             <Input btn type="submit" value="Save"/>
         </Form>
+        
     </Container>
   )
 }

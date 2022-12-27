@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
+import ExpensesForm from '../Components/ExpensesForm'
 import ExpensesGraph from '../Components/ExpensesGraph'
 import ExpensesTracker from '../Components/ExpensesTracker'
 
@@ -17,11 +18,20 @@ const Header = styled.h4`
 `
 
 function Expenses() {
+  const [editor,setEditor] = useState(false)
+  const edit = () =>{
+    
+    setEditor(true)
+  }
   return (
     <Container>
         <ExpensesGraph/>
         <Header>Expenses</Header>
-        <ExpensesTracker/>
+        {!editor ? <div>
+          <ExpensesTracker/>
+          <button type="button" onClick={edit}>Edit expenses</button>
+        </div> : <ExpensesForm/> }
+        
     </Container>
   )
 }

@@ -1,10 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from "styled-components"
 import {FaDumbbell, FaBusAlt, FaPoundSign} from "react-icons/fa"
 import {BsFillHouseDoorFill,BsFillBasketFill} from "react-icons/bs"
-import {TbGlass} from "react-icons/tb"
+import {TbCurrentLocation, TbGlass} from "react-icons/tb"
 import {IoMdPaper} from "react-icons/io"
 import {IconContext} from "react-icons"
+import useExpense from '../services/firebase/useExpense'
+import { getAuth } from 'firebase/auth';
+import createNotification from '../assets/notification';
 
 
 const Container = styled.div`
@@ -57,29 +60,65 @@ const Text = styled.div`
   text-size:10px;
   margin:5px;
 `
+
+const Button = styled.button`
+
+`
 const Price = styled(Text)`
 
 `
 
 function Home() {
+  const {createMoneyIn} = useExpense()
+  const auth = getAuth()
+  const [balance, setBalance] = useState(0)
+  const [monthlyLimit, setMonthlyLimit] = useState(0)
+  const [savings, setSavings] = useState(0)
+
+
+
+  const sendDetails = async (e) =>{
+    e.preventDefault()
+    
+    const moneyIndetails ={
+      user: auth.currentUser.email,
+      userbalance:[
+      balance,
+      savings, 
+      monthlyLimit],
+      createdAt: new Date().toString()
+    }
+    try{
+      await createMoneyIn(moneyIndetails)
+    }catch(error){
+      console.log(error)
+      }
+
+    }
+    const callNot = () =>{
+      createNotification('info')
+    }
+ 
+
   return (
     <Container>
       <IconContext.Provider value={{size:"1.15em",style:{justifyContent: 'center',alignSelf:"center", paddingLeft: "1em"}}}>
         <Header>Balance</Header>
         <InputBox>
           <FaPoundSign/>
-          <Input placeholder='0'/>
+          <Input placeholder='0' onChange={e => setBalance(e.target.value)}/>
         </InputBox>
         <Header>Monthly Limit</Header>
         <InputBox>
           <FaPoundSign/>
-         <Input placeholder='0'/>
+         <Input placeholder='0' onChange={e => setMonthlyLimit(e.target.value)}/>
         </InputBox>
         <Header>Savings </Header>
         <InputBox>
           <FaPoundSign/>
-          <Input placeholder='0'/>
+          <Input placeholder='0' onChange={e => setSavings(e.target.value)}/>
         </InputBox>
+        <Button type="button" onClick ={(e) => {sendDetails(e)}}> Set your Balance </Button>
         <Header>Expenses</Header>
       </IconContext.Provider>
       <IconContext.Provider value = {{style: {verticalAlign:'middle'}, size: "2em"}}>
@@ -116,6 +155,7 @@ function Home() {
           </Items>
         </Table>
       </IconContext.Provider>
+      <button onClick={callNot}>Click me</button>
     </Container>
   )
 }

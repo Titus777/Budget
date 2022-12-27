@@ -15,12 +15,12 @@ function useAuth() {
 	  
 		onAuthStateChanged(auth, (user) => {
 			if (user) {
-				console.log(user);
+			
 				setIsAuthenticated(true);
 				return;
 			}
 			setIsAuthenticated(false);
-			console.log("auth called");
+			
 			return;
 		});
 	  
@@ -34,9 +34,9 @@ function useAuth() {
 	const signIn = (email, password) =>
 		signInWithEmailAndPassword(auth, email, password);
 
-	const signOut = () => signOut(auth);
+	const signUserOut = () => signOut(auth);
 
-	return { createUser, isAuthenticated, signIn, signOut };
+	return { createUser, isAuthenticated, signIn, signUserOut };
 
 }
 export default useAuth;

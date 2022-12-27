@@ -5,6 +5,7 @@ import {AiFillSetting} from 'react-icons/ai'
 import {MdGraphicEq} from "react-icons/md"
 import {IconContext} from "react-icons"
 import {Link} from "react-router-dom"
+import useAuth from '../services/firebase/useAuth'
 
 const FooterBar = styled.div`
   display: flex;
@@ -38,8 +39,8 @@ const Option = styled.div`
   
 `
 
-const LogButton = styled.input`
-  padding: 1.2vh;
+const LogButton = styled.button`
+  padding: 1.5vh;
   border: double grey;
   background-color: white;
   
@@ -47,7 +48,10 @@ const LogButton = styled.input`
 
 
 
-function Header() {
+function Header(props) {
+ 
+  const {signUserOut} = useAuth()
+
   return (
     <FooterBar>
       <IconContext.Provider value ={{size:"2.5em"}}>
@@ -72,9 +76,9 @@ function Header() {
           </Option>
        
         </OptionFeed>
-        <Link to="/login">
-          <LogButton type="button" value="Login"/>
-        </Link>
+        {!props.authenticated ?(<Link to="/login">
+          <LogButton type="button" >Login</LogButton>
+        </Link>): <LogButton onClick={signUserOut}>Sign Out</LogButton>}
       </IconContext.Provider>
     </FooterBar>
   )

@@ -30,6 +30,7 @@ const Input = styled.input`
 `
 
 function RegisterForm() {
+ 
   const {createUser} = useAuth()
   const schema = yup.object().shape({
     email: yup

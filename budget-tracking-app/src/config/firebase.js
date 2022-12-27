@@ -1,10 +1,9 @@
-
-
-
 const firebaseConfig = {
     apiKey: "AIzaSyBwfcvwhFT-pR2LEqAMo_0aJOvKXybF3tk",
 
     authDomain: "budget-app-a4e07.firebaseapp.com",
+  
+    databaseURL: "https://budget-app-a4e07-default-rtdb.europe-west1.firebasedatabase.app",
   
     projectId: "budget-app-a4e07",
   
