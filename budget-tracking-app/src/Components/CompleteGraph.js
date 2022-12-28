@@ -1,19 +1,24 @@
 import React from 'react';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-import { Pie } from 'react-chartjs-2';
+import { Doughnut } from 'react-chartjs-2';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 
-function ExpensesGraph(props) {
+function CompleteGraph(props) {
   
 
+    const potentialSavings = props.balance - props.monthlyLimit
+    const totalCost = props.gym + props.rent + props.travel + props.social + props.bills + props.groceries
+    const usableMoney= props.balance - props.monthlyLimit
+    const totalMoney = props.balance + props.savings
+
   const data = {
-    labels: ['Gym', 'Rent', 'Social', 'Travel', 'Bills', 'Groceries'],
+    labels: ['Total costs',"Potential Savings","Balance","Usable(without Savings)","Money in Total"],
     datasets: [
       {
         label: 'Price in pounds',
-        data: [props.gym, props.rent, props.social, props.travel, props.bills, props.groceries],
+        data: [totalCost,potentialSavings,props.balance,usableMoney,totalMoney],
         backgroundColor: [
           'rgba(255, 99, 132, 0.2)',
           'rgba(54, 162, 235, 0.2)',
@@ -35,10 +40,10 @@ function ExpensesGraph(props) {
     ],
   };
   return (
-   <Pie data={data} />
+   <Doughnut data={data} />
   )
 }
 
-export default ExpensesGraph
+export default CompleteGraph
 
 

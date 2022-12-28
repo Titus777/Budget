@@ -1,6 +1,6 @@
 import React,{useEffect,useRef} from 'react'
 import styled from 'styled-components'
-import {FaDumbbell, FaBusAlt, FaPoundSign} from "react-icons/fa"
+import {FaDumbbell, FaBusAlt} from "react-icons/fa"
 import {BsFillHouseDoorFill,BsFillBasketFill} from "react-icons/bs"
 import {TbGlass} from "react-icons/tb"
 import {IoMdPaper} from "react-icons/io"
@@ -34,7 +34,7 @@ const Price = styled(Text)`
 
 function ExpensesTracker(exp) {
  
-  console.log(exp)
+ 
   return (
     <div>
         <Table>
@@ -42,33 +42,33 @@ function ExpensesTracker(exp) {
                 <Items> 
                     <Text>Gym</Text>
                     <FaDumbbell />
-                    <Price>{exp ? `£${exp.gym}`: "0"}</Price>
+                    <Price>{exp.gym ? `£${exp.gym}`: "0"}</Price>
                 </Items>
                 <Items> 
                     <Text>Rent</Text>
                     <BsFillHouseDoorFill value = {{style: {verticalAlign:'middle'}}}/> 
-                    <Price>{exp ? `£${exp.rent}`: "0"}</Price>
+                    <Price>{exp.rent ? `£${exp.rent}`: "0"}</Price>
                 </Items>
                 <Items> 
                     <Text> Groceries</Text>
                     <BsFillBasketFill value = {{style: {verticalAlign:'middle'}}}/> 
-                    <Price>{exp ? `£${exp.groceries}`: "0"}</Price>
+                    <Price>{exp.groceries ? `£${exp.groceries}`: "0"}</Price>
                 </Items>
                 <Items> 
                     <Text> Travel </Text>
                     <FaBusAlt value = {{style: {verticalAlign:'middle'}}}/> 
-                    <Price>{exp ? `£${exp.travel}`: "0"}</Price>
+                    <Price>{exp.travel ? `£${exp.travel}`: "0"}</Price>
                 </Items>
                 <Items> 
                     <Text> Social </Text>
                     <TbGlass value = {{style: {verticalAlign:'middle'}}}/> 
-                    <Price>{exp ? `£${exp.social}`: "0"}
+                    <Price>{exp.social ? `£${exp.social}`: "0"}
                     </Price>
                 </Items>
                 <Items> 
                     <Text> Bills </Text>
                     <IoMdPaper value = {{style: {verticalAlign:'middle'}}}/> 
-                    <Price>{exp ? `£${exp.bills}`: "0"}</Price>
+                    <Price>{exp.bills ? `£${exp.bills}`: "0"}</Price>
                 </Items>
             </IconContext.Provider>
         </Table>

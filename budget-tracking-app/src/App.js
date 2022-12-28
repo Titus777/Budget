@@ -44,7 +44,7 @@ function App() {
             <Home/>
           </Protected>
           <Protected path="/bills" authenticated={isAuthenticated}>
-            <Bills/>
+            <Bills authenticated={isAuthenticated}/>
           </Protected>
           <Protected path="/expens" authenticated={isAuthenticated}>
             <Expenses/>

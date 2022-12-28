@@ -14,17 +14,21 @@ function useExpense() {
 
   const ref2 = collection(db,"money")
   const ref = collection(db, "expenses")
+  const billsRef = collection(db,"bills")
 
   const createExpenses = (expenses) => addDoc(ref, expenses);
   const createMoneyIn = (moneyIn) => addDoc(ref2,moneyIn)
+  const createBills = (bills) => addDoc(billsRef, bills)
 
   const getExpenses = () => getDocs(ref);
   const getMoney = () => getDocs(ref2)
+  const getMonthlyBills = (email) => query(billsRef,where("user","==",email),orderBy("createdAt","desc"))
   
   const getLastExpense = (email) => query(ref, where("user", "==",email),orderBy("createdAt","desc"), limit(1))
   const getLastMoneyIn = (email) => query(ref2, where("user", "==",email),orderBy("createdAt","desc"), limit(1))
+  const getLastBills = (email) => query(billsRef,where("user", "==",email),orderBy("createdAt","desc"), limit(1))
 
-  return {createExpenses,createMoneyIn,getExpenses,getMoney,getLastExpense,getLastMoneyIn}
+  return {createExpenses,createMoneyIn,getExpenses,getMoney,getLastExpense,getLastMoneyIn,createBills,getLastBills,getMonthlyBills}
 }
 
 export default useExpense;

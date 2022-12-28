@@ -6,6 +6,7 @@ import ExpensesTracker from '../Components/ExpensesTracker'
 import { getAuth } from 'firebase/auth'
 import useExpense from '../services/firebase/useExpense'
 import { getDocs } from 'firebase/firestore'
+import CompleteGraph from '../Components/CompleteGraph'
 
 const Container = styled.div`
   display:flex-column;
@@ -21,55 +22,54 @@ const Header = styled.h4`
 `
 
 function Expenses() {
-  const {getLastExpense} = useExpense()
+  const {getLastExpense,getLastMoneyIn} = useExpense()
   const [fetched, setFetch] = useState(false)
   const auth = getAuth()
   const expensesList = useRef([])
+  const moneyList = useRef([])
 
-  const [editor,setEditor] = useState(false)
   
-
-  const edit = () =>{
-    
-    setEditor(true)
-  }
   const getData = async () =>{
     const lastExpense = getLastExpense(auth.currentUser?.email)
+    const lastMoneyIn = getLastMoneyIn(auth.currentUser?.email)
     
-    let datas = []
+    let expdatas = []
+    let moneyData = []
     const expensesSnap = await getDocs(lastExpense)
+    const moneySnap = await getDocs(lastMoneyIn)
   
     expensesSnap.forEach((doc) =>{
       let data = doc.data()
-      datas.push(data)
+      expdatas.push(data)
     })
-   
-    expensesList.current = datas[0].expenses
+
+    moneySnap.forEach((doc) =>{
+      let data = doc.data()
+      moneyData.push(data)
+    })
+    
+    expensesList.current = expdatas[0].expenses
+    moneyList.current = moneyData[0].userbalance
+
+
     if(!expensesList.current){
       setFetch(false)
     }
     setFetch(true)
   }    
  
- 
 
   useEffect(() => {
     getData()
-  },[setFetch])
+  },[fetched])
 
-  console.log(expensesList.current)
- 
-  
 
   return (
     <Container>
         <Header>Expenses</Header>
         <ExpensesGraph  {...expensesList.current}/>
-        
-        {!editor ? <div>
-          <button type="button" onClick={edit}>Edit expenses</button>
-        </div> : <ExpensesForm/> }
-        
+        <Header>Total</Header>
+        <CompleteGraph {...moneyList.current} {...expensesList.current}/>
     </Container>
   )
 }

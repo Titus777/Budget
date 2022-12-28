@@ -79,12 +79,12 @@ function ExpensesForm() {
       const filledData= {
         user: auth.currentUser.email,
         expenses:{
-        gym,
-        rent,
-        groceries,
-        travel,
-        social,
-        bills},
+        gym: +gym,
+        rent: +rent,
+        groceries: +groceries,
+        travel: +travel,
+        social: +social,
+        bills: +bills},
         createdAt: new Date().toString()
         }
       await createExpenses(filledData)
@@ -101,17 +101,17 @@ function ExpensesForm() {
         <Form onSubmit={handleSubmit(inSubmit)}>
           <h3>{errors && errors?.message}</h3>
             <Label>Gym </Label>
-            <Input {...register("gym")} type="text"/>
+            <Input {...register("gym")} type="number" step="any"/>
             <Label>Rent </Label>
-            <Input {...register("rent")} type="text"/>
+            <Input {...register("rent")} type="number" step="any"/>
             <Label>Groceries </Label>
-            <Input {...register("groceries")} type="text"/>
+            <Input {...register("groceries")} type="number" step="any"/>
             <Label>Travel </Label>
-            <Input {...register("travel")} type="text"/>
+            <Input {...register("travel")} type="number" step="any"/>
             <Label>Social </Label>
-            <Input {...register("social")} type="text"/>
+            <Input {...register("social")} type="number" step="any"/>
             <Label>Bills </Label>
-            <Input {...register("bills")} type="text"/>
+            <Input {...register("bills")} type="number" step="any"/>
             <Input btn type="submit" value="Save"/>
         </Form>
         

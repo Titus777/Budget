@@ -10,6 +10,7 @@ import { getAuth } from 'firebase/auth';
 import createNotification from '../assets/notification';
 import { getDocs } from 'firebase/firestore'
 import ExpensesTracker from '../Components/ExpensesTracker'
+import ExpensesForm from '../Components/ExpensesForm'
 
 
 const Container = styled.div`
@@ -78,8 +79,14 @@ function Home() {
   const [balance, setBalance] = useState(0)
   const [monthlyLimit, setMonthlyLimit] = useState(0)
   const [savings, setSavings] = useState(0)
-
+  const [editor,setEditor] = useState(false)
   
+
+  const edit = () =>{
+    
+    setEditor(true)
+  }
+
 
   const sendDetails = async (e) =>{
     e.preventDefault()
@@ -87,9 +94,9 @@ function Home() {
     const moneyIndetails ={
       user: auth.currentUser.email,
       userbalance:{
-      balance,
-      savings, 
-      monthlyLimit},
+      balance: +balance,
+      savings: +savings, 
+      monthlyLimit: +monthlyLimit},
       createdAt: new Date().toString()
     }
     try{
@@ -135,7 +142,6 @@ function Home() {
       expnse = expensesList.current[0].expenses
     }
    
-   
     
   return (
     <Container>
@@ -143,22 +149,25 @@ function Home() {
         <Header>Balance</Header>
         <InputBox>
           <FaPoundSign/>
-          <Input value={balance} onChange={e => setBalance(e.target.value)}/>
+          <Input value={balance} type="number" onChange={e => setBalance(e.target.value)}/>
         </InputBox>
         <Header>Monthly Limit</Header>
         <InputBox>
           <FaPoundSign/>
-         <Input value={monthlyLimit} onChange={e => setMonthlyLimit(e.target.value)}/>
+         <Input value={monthlyLimit} type="number" onChange={e => setMonthlyLimit(e.target.value)}/>
         </InputBox>
         <Header>Savings </Header>
         <InputBox>
           <FaPoundSign/>
-          <Input value={savings} onChange={e => setSavings(e.target.value)}/>
+          <Input value={savings} type="number" onChange={e => setSavings(e.target.value)}/>
         </InputBox>
         <Button type="button" onClick ={(e) => {sendDetails(e)}}> Set your Balance </Button>
         <Header>Expenses</Header>
       </IconContext.Provider>
       <ExpensesTracker {...expnse}/>
+      {!editor ? <div>
+          <button type="button" onClick={edit}>Edit expenses</button>
+        </div> : <ExpensesForm/> }
       
       <button onClick={callNot}>Click me</button>
     </Container>
