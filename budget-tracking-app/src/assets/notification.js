@@ -3,7 +3,7 @@ import {NotificationManager} from 'react-notifications'
 const createNotification = (type) =>{
     console.log("called",type)
     NotificationManager.info("called")
-    return() => {
+    return () => {
     switch (type){
         case 'info':
          NotificationManager.info('Info message')

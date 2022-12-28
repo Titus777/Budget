@@ -38,7 +38,7 @@ const BillInfo = styled.div`
   justify-content: center;
 `
 
-function Bills() {
+function Bills(props) {
   return (
     <Container>
         <UpcomingBills>

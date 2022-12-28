@@ -78,13 +78,13 @@ function ExpensesForm() {
       const {gym,rent,groceries,travel,social,bills} = data
       const filledData= {
         user: auth.currentUser.email,
-        expenses:[
+        expenses:{
         gym,
         rent,
         groceries,
         travel,
         social,
-        bills],
+        bills},
         createdAt: new Date().toString()
         }
       await createExpenses(filledData)

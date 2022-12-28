@@ -40,11 +40,11 @@ function LoginForm() {
       .string()
       .required("password is required")
       .min(2, "password must be a a longer than two letters"),
-    username: yup
+    email : yup
       .string()
-      .required("Username is required")
+      .email()
+      .required("Email is required")
       .min(3,"Minimum of 3 characters")
-      .max(12, "Maximum of twelve characters")
   })
 
   const {
@@ -64,9 +64,9 @@ function LoginForm() {
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
-        <p>{errors.username && errors.username?.message}</p>
-        <Label htmlfor="username">Username</Label>
-        <Input {...register("username")} type="text"/>
+        <p>{errors.email && errors.email?.message}</p>
+        <Label htmlfor="email">Username</Label>
+        <Input {...register("email")} type="text"/>
         <p>{errors.password && errors.password?.message}</p>
         <Label htmlfor="password" >Password</Label>
         <Input {...register("password")} type="password"/>

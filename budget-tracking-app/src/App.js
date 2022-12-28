@@ -32,6 +32,7 @@ function App() {
     }
     return
   },[isAuthenticated])
+  
   return (
     <div className="App">
       <ThemeProvider theme={theme}>

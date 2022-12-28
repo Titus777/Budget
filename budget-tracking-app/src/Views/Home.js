@@ -1,13 +1,14 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import styled from "styled-components"
 import {FaDumbbell, FaBusAlt, FaPoundSign} from "react-icons/fa"
 import {BsFillHouseDoorFill,BsFillBasketFill} from "react-icons/bs"
-import {TbCurrentLocation, TbGlass} from "react-icons/tb"
+import { TbGlass} from "react-icons/tb"
 import {IoMdPaper} from "react-icons/io"
 import {IconContext} from "react-icons"
 import useExpense from '../services/firebase/useExpense'
 import { getAuth } from 'firebase/auth';
 import createNotification from '../assets/notification';
+import { getDocs } from 'firebase/firestore'
 
 
 const Container = styled.div`
@@ -69,23 +70,25 @@ const Price = styled(Text)`
 `
 
 function Home() {
-  const {createMoneyIn} = useExpense()
+  const {createMoneyIn,getLastExpense,getLastMoneyIn} = useExpense()
   const auth = getAuth()
+  let expnse = null
+  const expensesList = useRef([])
   const [balance, setBalance] = useState(0)
   const [monthlyLimit, setMonthlyLimit] = useState(0)
   const [savings, setSavings] = useState(0)
 
-
+  
 
   const sendDetails = async (e) =>{
     e.preventDefault()
     
     const moneyIndetails ={
       user: auth.currentUser.email,
-      userbalance:[
+      userbalance:{
       balance,
       savings, 
-      monthlyLimit],
+      monthlyLimit},
       createdAt: new Date().toString()
     }
     try{
@@ -98,25 +101,58 @@ function Home() {
     const callNot = () =>{
       createNotification('info')
     }
- 
+    const getData = async() =>{
+      const lastExpense = getLastExpense(auth.currentUser?.email)
+      let datas = []
+      const expensesSnap = await getDocs(lastExpense)
+    
+      expensesSnap.forEach((doc) =>{
+        let data = doc.data()
+        datas.push(data)
+      })
+      expensesList.current = datas
+      const lastMoneyIn = getLastMoneyIn(auth.currentUser?.email)
 
+      const moneySnap = await getDocs(lastMoneyIn)
+
+      moneySnap.forEach((doc) =>{
+        let data = doc.data()
+        setBalance(data.userbalance.balance)
+        setMonthlyLimit(data.userbalance.monthlyLimit)
+        setSavings(data.userbalance.savings)
+      })
+
+    }
+    
+    
+    useEffect(() => {
+     
+      getData()
+    },[])
+
+    if(expensesList.current[0]){
+      expnse = expensesList.current[0].expenses
+    }
+   
+   
+    
   return (
     <Container>
       <IconContext.Provider value={{size:"1.15em",style:{justifyContent: 'center',alignSelf:"center", paddingLeft: "1em"}}}>
         <Header>Balance</Header>
         <InputBox>
           <FaPoundSign/>
-          <Input placeholder='0' onChange={e => setBalance(e.target.value)}/>
+          <Input value={balance} onChange={e => setBalance(e.target.value)}/>
         </InputBox>
         <Header>Monthly Limit</Header>
         <InputBox>
           <FaPoundSign/>
-         <Input placeholder='0' onChange={e => setMonthlyLimit(e.target.value)}/>
+         <Input value={monthlyLimit} onChange={e => setMonthlyLimit(e.target.value)}/>
         </InputBox>
         <Header>Savings </Header>
         <InputBox>
           <FaPoundSign/>
-          <Input placeholder='0' onChange={e => setSavings(e.target.value)}/>
+          <Input value={savings} onChange={e => setSavings(e.target.value)}/>
         </InputBox>
         <Button type="button" onClick ={(e) => {sendDetails(e)}}> Set your Balance </Button>
         <Header>Expenses</Header>
@@ -126,32 +162,32 @@ function Home() {
           <Items> 
             <Text>Gym</Text>
             <FaDumbbell />
-            <Price>£12.99</Price>
+            <Price>{expnse ? `£${expnse.gym}`: "Data not found"}</Price>
           </Items>
           <Items> 
             <Text>Rent</Text>
             <BsFillHouseDoorFill value = {{style: {verticalAlign:'middle'}}}/> 
-            <Price>£12.99</Price>
+            <Price>{expnse ? `£${expnse.rent}`: "Data not found"}</Price>
           </Items>
           <Items> 
             <Text> Groceries</Text>
             <BsFillBasketFill value = {{style: {verticalAlign:'middle'}}}/> 
-            <Price>£12.99</Price>
+            <Price>{expnse ? `£${expnse.groceries}`: "Data not found"}</Price>
           </Items>
           <Items> 
             <Text> Travel </Text>
             <FaBusAlt value = {{style: {verticalAlign:'middle'}}}/> 
-            <Price>£12.99</Price>
+            <Price>{expnse ? `£${expnse.travel}`: "Data not found"}</Price>
           </Items>
           <Items> 
             <Text> Social </Text>
             <TbGlass value = {{style: {verticalAlign:'middle'}}}/> 
-            <Price>£12.99</Price>
+            <Price>{expnse ? `£${expnse.social}`: "Data not found"}</Price>
           </Items>
           <Items> 
             <Text> Bills </Text>
             <IoMdPaper value = {{style: {verticalAlign:'middle'}}}/> 
-            <Price>12.99</Price>
+            <Price>{expnse ? `£${expnse.bills}`: "Data not found"}</Price>
           </Items>
         </Table>
       </IconContext.Provider>
