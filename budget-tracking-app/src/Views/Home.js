@@ -9,6 +9,7 @@ import useExpense from '../services/firebase/useExpense'
 import { getAuth } from 'firebase/auth';
 import createNotification from '../assets/notification';
 import { getDocs } from 'firebase/firestore'
+import ExpensesTracker from '../Components/ExpensesTracker'
 
 
 const Container = styled.div`
@@ -129,7 +130,7 @@ function Home() {
      
       getData()
     },[])
-
+   
     if(expensesList.current[0]){
       expnse = expensesList.current[0].expenses
     }
@@ -157,40 +158,8 @@ function Home() {
         <Button type="button" onClick ={(e) => {sendDetails(e)}}> Set your Balance </Button>
         <Header>Expenses</Header>
       </IconContext.Provider>
-      <IconContext.Provider value = {{style: {verticalAlign:'middle'}, size: "2em"}}>
-        <Table>
-          <Items> 
-            <Text>Gym</Text>
-            <FaDumbbell />
-            <Price>{expnse ? `£${expnse.gym}`: "Data not found"}</Price>
-          </Items>
-          <Items> 
-            <Text>Rent</Text>
-            <BsFillHouseDoorFill value = {{style: {verticalAlign:'middle'}}}/> 
-            <Price>{expnse ? `£${expnse.rent}`: "Data not found"}</Price>
-          </Items>
-          <Items> 
-            <Text> Groceries</Text>
-            <BsFillBasketFill value = {{style: {verticalAlign:'middle'}}}/> 
-            <Price>{expnse ? `£${expnse.groceries}`: "Data not found"}</Price>
-          </Items>
-          <Items> 
-            <Text> Travel </Text>
-            <FaBusAlt value = {{style: {verticalAlign:'middle'}}}/> 
-            <Price>{expnse ? `£${expnse.travel}`: "Data not found"}</Price>
-          </Items>
-          <Items> 
-            <Text> Social </Text>
-            <TbGlass value = {{style: {verticalAlign:'middle'}}}/> 
-            <Price>{expnse ? `£${expnse.social}`: "Data not found"}</Price>
-          </Items>
-          <Items> 
-            <Text> Bills </Text>
-            <IoMdPaper value = {{style: {verticalAlign:'middle'}}}/> 
-            <Price>{expnse ? `£${expnse.bills}`: "Data not found"}</Price>
-          </Items>
-        </Table>
-      </IconContext.Provider>
+      <ExpensesTracker {...expnse}/>
+      
       <button onClick={callNot}>Click me</button>
     </Container>
   )

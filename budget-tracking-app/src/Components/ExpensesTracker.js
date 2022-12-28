@@ -5,8 +5,6 @@ import {BsFillHouseDoorFill,BsFillBasketFill} from "react-icons/bs"
 import {TbGlass} from "react-icons/tb"
 import {IoMdPaper} from "react-icons/io"
 import {IconContext} from "react-icons"
-import useExpense from '../services/firebase/useExpense'
-import { getDocs } from 'firebase/firestore'
 
 const Table = styled.div`
   display: grid;
@@ -34,7 +32,7 @@ const Price = styled(Text)`
 
 `
 
-function ExpensesTracker({exp}) {
+function ExpensesTracker(exp) {
  
   console.log(exp)
   return (

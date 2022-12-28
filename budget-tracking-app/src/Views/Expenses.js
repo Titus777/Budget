@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect,useMemo } from 'react'
 import styled from 'styled-components'
 import ExpensesForm from '../Components/ExpensesForm'
 import ExpensesGraph from '../Components/ExpensesGraph'
@@ -22,15 +22,18 @@ const Header = styled.h4`
 
 function Expenses() {
   const {getLastExpense} = useExpense()
+  const [fetched, setFetch] = useState(false)
   const auth = getAuth()
   const expensesList = useRef([])
+
   const [editor,setEditor] = useState(false)
+  
 
   const edit = () =>{
     
     setEditor(true)
   }
-  const getData = async() =>{
+  const getData = async () =>{
     const lastExpense = getLastExpense(auth.currentUser?.email)
     
     let datas = []
@@ -42,20 +45,28 @@ function Expenses() {
     })
    
     expensesList.current = datas[0].expenses
+    if(!expensesList.current){
+      setFetch(false)
+    }
+    setFetch(true)
+  }    
+ 
+ 
 
-  }
+  useEffect(() => {
+    getData()
+  },[setFetch])
 
-
-  getData()
-
+  console.log(expensesList.current)
+ 
   
 
   return (
     <Container>
-        <ExpensesGraph  {...expensesList.current}/>
         <Header>Expenses</Header>
+        <ExpensesGraph  {...expensesList.current}/>
+        
         {!editor ? <div>
-          <ExpensesTracker {...expensesList.current}/>
           <button type="button" onClick={edit}>Edit expenses</button>
         </div> : <ExpensesForm/> }
         
