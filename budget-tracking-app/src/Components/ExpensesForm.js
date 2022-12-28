@@ -72,7 +72,7 @@ function ExpensesForm() {
   const inSubmit = async (data) => {
    
     try{
-      const {gym,rent,groceries,travel,social,bills} = data
+      const {gym,rent,groceries,travel,social} = data
       const filledData= {
         user: auth.currentUser.email,
         expenses:{
