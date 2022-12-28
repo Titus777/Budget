@@ -43,27 +43,24 @@ function ExpensesForm() {
     gym: yup
       .string()
       .required()
-      .min(5, "Please format them `22.44`"),
+      .min(1, "Please format them `22.44`"),
     rent: yup
     .string()
     .required()
-    .min(5, "Please format them `22.44`"),
+    .min(1, "Please format them `22.44`"),
     groceries: yup
     .string()
     .required()
-    .min(5, "Please format them `22.44`"),
+    .min(1, "Please format them `22.44`"),
     travel: yup
     .string()
     .required()
-    .min(5, "Please format them `22.44`"),
+    .min(1, "Please format them `22.44`"),
     social: yup
     .string()
     .required()
-    .min(5, "Please format them `22.44`"),
-    bills: yup
-    .string()
-    .required()
-    .min(5, "Please format them `22.44`"),
+    .min(1, "Please format them `22.44`")
+    
   })
 
   const {
@@ -84,7 +81,7 @@ function ExpensesForm() {
         groceries: +groceries,
         travel: +travel,
         social: +social,
-        bills: +bills},
+        },
         createdAt: new Date().toString()
         }
       await createExpenses(filledData)
@@ -110,8 +107,6 @@ function ExpensesForm() {
             <Input {...register("travel")} type="number" step="any"/>
             <Label>Social </Label>
             <Input {...register("social")} type="number" step="any"/>
-            <Label>Bills </Label>
-            <Input {...register("bills")} type="number" step="any"/>
             <Input btn type="submit" value="Save"/>
         </Form>
         

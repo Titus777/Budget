@@ -1,11 +1,9 @@
 import React,{useEffect, useRef,useState} from 'react'
-
 import styled from 'styled-components'
 import useExpense from '../services/firebase/useExpense'
 import { getAuth } from 'firebase/auth'
 import { getDocs } from 'firebase/firestore'
 import Bill from '../Components/Bill'
-import { set } from 'react-hook-form'
 import BillForm from '../Components/BillForm'
 
 
@@ -87,7 +85,7 @@ function Bills() {
     <Container>
         <UpcomingBills>
             <Header>Your upcoming bills: </Header>
-            {billsList.current[0].user ? billsList.current.map((bill) =>{
+            {billsList.current? billsList.current.map((bill) =>{
               return <Bill {...bill.bills} currentMonth= {currentMonth}/> 
             }): <h3>Please insert your own bills.</h3>}
             {addBill ? <BillForm auth={auth.currentUser?.email}/> : <div></div>}

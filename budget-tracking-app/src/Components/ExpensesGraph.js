@@ -13,7 +13,7 @@ function ExpensesGraph(props) {
     datasets: [
       {
         label: 'Price in pounds',
-        data: [props.gym, props.rent, props.social, props.travel, props.bills, props.groceries],
+        data: [props.gym, props.rent, props.social, props.travel, props.billsTotal, props.groceries],
         backgroundColor: [
           'rgba(255, 99, 132, 0.2)',
           'rgba(54, 162, 235, 0.2)',

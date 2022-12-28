@@ -33,7 +33,7 @@ const Price = styled(Text)`
 `
 
 function ExpensesTracker(exp) {
- 
+ console.log(exp)
  
   return (
     <div>
@@ -68,7 +68,7 @@ function ExpensesTracker(exp) {
                 <Items> 
                     <Text> Bills </Text>
                     <IoMdPaper value = {{style: {verticalAlign:'middle'}}}/> 
-                    <Price>{exp.bills ? `£${exp.bills}`: "0"}</Price>
+                    <Price>{exp.current ? `£${exp.current}`: "0"}</Price>
                 </Items>
             </IconContext.Provider>
         </Table>

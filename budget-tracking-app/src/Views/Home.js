@@ -72,7 +72,7 @@ const Price = styled(Text)`
 `
 
 function Home() {
-  const {createMoneyIn,getLastExpense,getLastMoneyIn} = useExpense()
+  const {createMoneyIn,getLastExpense,getLastMoneyIn,billCalculator,getMonthlyBills} = useExpense()
   const auth = getAuth()
   let expnse = null
   const expensesList = useRef([])
@@ -80,6 +80,7 @@ function Home() {
   const [monthlyLimit, setMonthlyLimit] = useState(0)
   const [savings, setSavings] = useState(0)
   const [editor,setEditor] = useState(false)
+  const billsTotal = useRef(0)
   
 
   const edit = () =>{
@@ -113,7 +114,8 @@ function Home() {
       const lastExpense = getLastExpense(auth.currentUser?.email)
       let datas = []
       const expensesSnap = await getDocs(lastExpense)
-    
+      
+      
       expensesSnap.forEach((doc) =>{
         let data = doc.data()
         datas.push(data)
@@ -129,6 +131,21 @@ function Home() {
         setMonthlyLimit(data.userbalance.monthlyLimit)
         setSavings(data.userbalance.savings)
       })
+
+      const getBills = getMonthlyBills(auth.currentUser?.email)
+      let billData = []
+      
+      const billSnap = await getDocs(getBills)
+    
+      
+  
+      billSnap.forEach((bill) =>{
+        let data = bill.data()
+        billData.push(data)
+      })
+     
+    
+      billsTotal.current = billCalculator(billData)
 
     }
     
@@ -164,7 +181,7 @@ function Home() {
         <Button type="button" onClick ={(e) => {sendDetails(e)}}> Set your Balance </Button>
         <Header>Expenses</Header>
       </IconContext.Provider>
-      <ExpensesTracker {...expnse}/>
+      <ExpensesTracker {...expnse} {...billsTotal}/>
       {!editor ? <div>
           <button type="button" onClick={edit}>Edit expenses</button>
         </div> : <ExpensesForm/> }

@@ -22,21 +22,26 @@ const Header = styled.h4`
 `
 
 function Expenses() {
-  const {getLastExpense,getLastMoneyIn} = useExpense()
+  const {getLastExpense,getLastMoneyIn,getMonthlyBills,billCalculator} = useExpense()
   const [fetched, setFetch] = useState(false)
   const auth = getAuth()
   const expensesList = useRef([])
   const moneyList = useRef([])
+  const billsTotal = useRef(0)
 
   
   const getData = async () =>{
     const lastExpense = getLastExpense(auth.currentUser?.email)
     const lastMoneyIn = getLastMoneyIn(auth.currentUser?.email)
+    const getBills = getMonthlyBills(auth.currentUser?.email)
+   
     
     let expdatas = []
     let moneyData = []
+    let billData = []
     const expensesSnap = await getDocs(lastExpense)
     const moneySnap = await getDocs(lastMoneyIn)
+    const billSnap = await getDocs(getBills)
   
     expensesSnap.forEach((doc) =>{
       let data = doc.data()
@@ -47,10 +52,16 @@ function Expenses() {
       let data = doc.data()
       moneyData.push(data)
     })
-    
+
+    billSnap.forEach((bill) =>{
+      let data = bill.data()
+      billData.push(data)
+    })
+   
     expensesList.current = expdatas[0].expenses
     moneyList.current = moneyData[0].userbalance
-
+    billsTotal.current = billCalculator(billData)
+    
 
     if(!expensesList.current){
       setFetch(false)
@@ -67,7 +78,7 @@ function Expenses() {
   return (
     <Container>
         <Header>Expenses</Header>
-        <ExpensesGraph  {...expensesList.current}/>
+        <ExpensesGraph  {...expensesList.current} billsTotal={billsTotal.current}/>
         <Header>Total</Header>
         <CompleteGraph {...moneyList.current} {...expensesList.current}/>
     </Container>

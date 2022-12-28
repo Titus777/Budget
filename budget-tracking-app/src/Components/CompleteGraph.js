@@ -10,7 +10,7 @@ function CompleteGraph(props) {
 
     const potentialSavings = props.balance - props.monthlyLimit
     const totalCost = props.gym + props.rent + props.travel + props.social + props.bills + props.groceries
-    const usableMoney= props.balance - props.monthlyLimit
+    const usableMoney= props.monthlyLimit
     const totalMoney = props.balance + props.savings
 
   const data = {
