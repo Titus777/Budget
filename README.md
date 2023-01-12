@@ -32,7 +32,7 @@ Stage 4- The final stage is to make the actual budget app using react and fireba
 
 This methodology has helped in this part of the project, it was easy to follow and understand. It had all the stages I needed to complete this project. 
 
-# Conclusion/Results 
+# Conclusion/Results 
 
 My single web application was given to two university students so that I can get feedback. When they observed the home page the first thing, they said was that it was straightforward and understandable. They mentioned that the expenses feature was useful as they as can add their own expenses and see how much they spent on each category e.g., groceries & bills. On the other hand, they did mention that they had to refresh the website so that the expenses are displayed. Furthermore, they were impressed by the pie chart how it calculates the expenses automatically and they stated that the upcoming bills page they found useful, as they won’t forget to pay bills. 
 
