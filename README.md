@@ -37,3 +37,20 @@ This methodology has helped in this part of the project, it was easy to follow a
 My single web application was given to two university students so that I can get feedback. When they observed the home page the first thing, they said was that it was straightforward and understandable. They mentioned that the expenses feature was useful as they as can add their own expenses and see how much they spent on each category e.g., groceries & bills. On the other hand, they did mention that they had to refresh the website so that the expenses are displayed. Furthermore, they were impressed by the pie chart how it calculates the expenses automatically and they stated that the upcoming bills page they found useful, as they won’t forget to pay bills. 
 
 To sum up this project I believe that this single web application solves the problems of students who have budgeting problems, as I have provided the features what has been asked for such as a monthly report and expenses category. With the help of react and firebase I was able to create the app. As explained before the rapid application deployment methodology was the best suited methodology for my project as it had the steps I was looking for when implementing the budget app, it wasn’t time consuming and became easy to complete the project on time. I learned many new skills in this project such as using react and firebase for the time. This was my first time creating a single page web application, it turned out pretty well, but I think if I had more time, I would have added more features such as notifications and reward system.
+
+
+# Appendix 
+
+Appendix A
+
+this shows the authentication in firebase
+
+<img width="1433" alt="image" src="https://user-images.githubusercontent.com/72074715/212199521-fb905ddf-402f-4445-afeb-59b32c9783c1.png">
+
+Appendix B
+
+you can see that below the budget app has been deployed through firebase
+
+<img width="1440" alt="image" src="https://user-images.githubusercontent.com/72074715/212200931-f54a02c6-03f8-468f-8696-82edad577267.png">
+
+
