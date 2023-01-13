@@ -35,11 +35,19 @@ Stage 4 releasing the product- The final stage is to make the actual budget app 
 
 This methodology has helped in this part of the project, it was easy to follow and understand. It had all the stages I needed to complete this project. From getting feedback on the prototypes, which helped alot in the first assessment as i was able to see if it was the right choice to move forward with, and if it was worthy of becoming the final product. The feedback for the final product will mentioned in the next part of this report. This methodology is reliant on feedback.
 
+# How to use the App
+
+In order for you to save your data you would have to insert data into the "balance, monthly Limit, savings" and press the button to "Set your balance". for the applicaiton to send it to firebase for storage. Additionally, in the section "Expenses", you can click the "Edit expenses" and a new form will appear. Complete the form (make sure that to use "0" if you don't spend anything on that specific expense) and press "Save". Then refresh the page.
+
 # Conclusion/Results 
 
 My single web application was given to two university students so that I can get feedback. When they observed the home page the first thing, they said was that it was straightforward and understandable. They mentioned that the expenses feature was useful as they as can add their own expenses and see how much they spent on each category e.g., groceries & bills. On the other hand, they did mention that they had to refresh the website so that the expenses are displayed. Furthermore, they were impressed by the pie chart how it calculates the expenses automatically and they stated that the upcoming bills page they found useful, as they won’t forget to pay bills. 
 
-Some bugs that are still in the app are that you'll have refresh the page when you set a balance and edit the expenses, other than that the app works properly 
+Some bugs that are still in the app are that you'll have refresh the page when you set a balance and edit the expenses, other than that the app works properly. 
+
+Some challenges i came across this project is that the balance and the expenses didn't work properly. It didn't display the money but i was able to fix by setting an "useState" to rerender each time my useRef hook would gain a new value. This way, the problem where my useRef value would update but my page wouldn't was fixed as "useState" would rerender my components with the new value from the useRef. 
+
+
 
 To sum up this project I believe that this single web application solves the problems of students who have budgeting problems, as I have provided the features what has been asked for such as a monthly report and expenses category. With the help of react and firebase I was able to create the app. As explained before the rapid application deployment methodology was the best suited methodology for my project as it had the steps I was looking for when implementing the budget app, it wasn’t time consuming and became easy to complete the project. I learned many new skills in this project such as using react and firebase for the time. This was my first time creating a single page web application, it turned out pretty well, but I think if I had more time, I would have added more features such as notifications and reward system. The notification feature was made but unfortunately I wasn't able to get it work, but i was happy the way the app turned and I got positive feedback from the students.
 
