@@ -81,6 +81,7 @@ function Home() {
   const [savings, setSavings] = useState(0)
   const [editor,setEditor] = useState(false)
   const billsTotal = useRef(0)
+  const [showTotal,setShowTotal] = useState(billsTotal.current)
   
 
   const edit = () =>{
@@ -98,7 +99,7 @@ function Home() {
       balance: +balance,
       savings: +savings, 
       monthlyLimit: +monthlyLimit},
-      createdAt: new Date().toString()
+      createdAt: new Date().toLocaleString()
     }
     try{
       await createMoneyIn(moneyIndetails)
@@ -107,60 +108,67 @@ function Home() {
       }
 
     }
-    const callNot = () =>{
-      createNotification('info')
-    }
-    const getData = async() =>{
-      const lastExpense = getLastExpense(auth.currentUser?.email)
-      let datas = []
-      const expensesSnap = await getDocs(lastExpense)
-      
-      
-      expensesSnap.forEach((doc) =>{
-        let data = doc.data()
-        datas.push(data)
-       
-      })
-      expensesList.current = datas
-      const lastMoneyIn = getLastMoneyIn(auth.currentUser?.email)
 
-      const moneySnap = await getDocs(lastMoneyIn)
+  const callNot = () =>{
+    createNotification('info')
+  }
 
-      moneySnap.forEach((doc) =>{
-        let data = doc.data()
-        setBalance(data.userbalance.balance)
-        setMonthlyLimit(data.userbalance.monthlyLimit)
-        setSavings(data.userbalance.savings)
-      })
 
-      const getBills = getMonthlyBills(auth.currentUser?.email)
-      let billData = []
-      
-      const billSnap = await getDocs(getBills)
+  const getData = async() =>{
+    const lastExpense = getLastExpense(auth.currentUser?.email)
+    let datas = []
+    const expensesSnap = await getDocs(lastExpense)
     
+    
+    expensesSnap.forEach((doc) =>{
+      let data = doc.data()
+      datas.push(data)
       
+    })
+    expensesList.current = datas
+    const lastMoneyIn = getLastMoneyIn(auth.currentUser?.email)
+
+    const moneySnap = await getDocs(lastMoneyIn)
+
+    moneySnap.forEach((doc) =>{
+      let data = doc.data()
+      setBalance(data.userbalance.balance)
+      setMonthlyLimit(data.userbalance.monthlyLimit)
+      setSavings(data.userbalance.savings)
+    })
+
+    const getBills = getMonthlyBills(auth.currentUser?.email)
+    let billData = []
+    
+    const billSnap = await getDocs(getBills)
   
-      billSnap.forEach((bill) =>{
-        let data = bill.data()
-        billData.push(data)
-      
-      })
- 
-      billsTotal.current = billCalculator(billData)
+    
 
-    }
+    billSnap.forEach((bill) =>{
+      let data = bill.data()
+      billData.push(data)
+    
+    })
+    
+    billsTotal.current = billCalculator(billData)
+    setShowTotal(billsTotal.current)
+  }
     
     
-    useEffect(() => {
-     
-      getData()
-    },[])
-   
-    if(expensesList.current[0]){
-      expnse = expensesList.current[0].expenses
-    }
-   
+  useEffect(() => {
     
+    getData()
+  },[])
+
+  console.log(billsTotal)
+  
+  if(expensesList.current[0]){
+    expnse = expensesList.current[0].expenses
+
+  }
+  
+
+
   return (
     <Container>
       <IconContext.Provider value={{size:"1.15em",style:{justifyContent: 'center',alignSelf:"center", paddingLeft: "1em"}}}>

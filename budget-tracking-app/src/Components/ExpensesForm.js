@@ -82,7 +82,7 @@ function ExpensesForm() {
         travel: +travel,
         social: +social,
         },
-        createdAt: new Date().toString()
+        createdAt: new Date().toLocaleString()
         }
       await createExpenses(filledData)
       createNotification("Success","Succesfull sent your expenses")

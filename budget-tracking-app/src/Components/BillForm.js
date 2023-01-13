@@ -57,7 +57,7 @@ function BillForm(auth) {
         console.log(data)
         const bill = {
           user: auth.auth,
-          createdAt: new Date().toString(),
+          createdAt: new Date().toLocaleString(),
           bills:data
         }
         try{

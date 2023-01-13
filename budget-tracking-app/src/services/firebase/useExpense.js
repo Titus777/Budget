@@ -22,17 +22,18 @@ function useExpense() {
 
   const getExpenses = () => getDocs(ref);
   const getMoney = () => getDocs(ref2)
-  const getMonthlyBills = (email) => query(billsRef,where("user","==",email),orderBy("createdAt","asc"))
+  const getMonthlyBills = (email) => query(billsRef,where("user","==",email),orderBy("createdAt","desc"))
   
-  const getLastExpense = (email) => query(ref, where("user", "==",email),orderBy("createdAt","asc"), limit(1))
-  const getLastMoneyIn = (email) => query(ref2, where("user", "==",email),orderBy("createdAt","asc"), limit(1))
-  const getLastBills = (email) => query(billsRef,where("user", "==",email),orderBy("createdAt","asc"), limit(1))
+  const getLastExpense = (email) => query(ref, where("user", "==",email),orderBy("createdAt","desc"), limit(1))
+  const getLastMoneyIn = (email) => query(ref2, where("user", "==",email),orderBy("createdAt","desc"), limit(1))
+  const getLastBills = (email) => query(billsRef,where("user", "==",email),orderBy("createdAt","desc"), limit(1))
 
   const billCalculator = (data) =>{
     let total = 0
     data.forEach((bill) =>{
       total = bill.bills.amount + total
     })
+   
     return total
   }
 

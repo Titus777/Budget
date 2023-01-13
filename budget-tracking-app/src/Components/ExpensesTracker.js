@@ -34,6 +34,7 @@ const Price = styled(Text)`
 
 function ExpensesTracker(exp) {
  console.log(exp)
+
  
   return (
     <div>
