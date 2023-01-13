@@ -46,6 +46,7 @@ function Expenses() {
     expensesSnap.forEach((doc) =>{
       let data = doc.data()
       expdatas.push(data)
+
     })
 
     moneySnap.forEach((doc) =>{

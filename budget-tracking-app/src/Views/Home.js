@@ -119,6 +119,7 @@ function Home() {
       expensesSnap.forEach((doc) =>{
         let data = doc.data()
         datas.push(data)
+       
       })
       expensesList.current = datas
       const lastMoneyIn = getLastMoneyIn(auth.currentUser?.email)
@@ -142,9 +143,9 @@ function Home() {
       billSnap.forEach((bill) =>{
         let data = bill.data()
         billData.push(data)
+      
       })
-     
-    
+ 
       billsTotal.current = billCalculator(billData)
 
     }
