@@ -6,9 +6,9 @@ Titus Mahendran
 
 14592592
 
-https://budget-app-a4e07.web.app/
+[https://budget-app-a4e07.web.app/](https://budget-app-a4e07.web.app/)
 
-https://github.com/Titus777/Budget
+[https://github.com/Titus777/Budget](https://github.com/Titus777/Budget)
 
  
 # Introduction
